@@ -46,20 +46,62 @@ const pizzaData = [
 const App = () => {
   return (
     <div>
-      <Pizza />
+      <Header />
+      <Menu />
+      <Footer />
     </div>
   );
 };
 export default App;
 
-function Pizza() {
+function Header() {
   return (
-    <div className="">
-      <img src="./pizzas/spinaci.jpg" alt="Pizza Spinaci" />
-      <h2 className="">Pizza Spinaci</h2>
-      <p className="">
-        Ingredients: Tomato, mozarella, spinach, and ricotta cheese
-      </p>
+    <header className="header">
+      <h1>Fast React Pizza Co.</h1>
+    </header>
+  );
+}
+
+function Menu() {
+  return (
+    <main className="menu">
+      <h2>Our menu</h2>
+      {pizzaData.map((pizza) => (
+        <Pizza
+          key={pizza.name}
+          name={pizza.name}
+          ingredients={pizza.ingredients}
+          photoName={pizza.photoName}
+          soldOut={pizza.soldOut}
+        />
+      ))}
+    </main>
+  );
+}
+
+function Pizza(props) {
+  return (
+    <div className="pizza">
+      <img src={props.photoName} alt={props.name} />
+      <div className="">
+        <h3 className="">{props.name}</h3>
+        <p className="">{props.ingredients}</p>
+      </div>
     </div>
+  );
+}
+
+function Footer() {
+  const hour = new Date().getHours();
+  const openHour = 12;
+  const closeHour = 22;
+  const isOpen = hour >= openHour && hour <= closeHour;
+  return (
+    <footer className="footer">
+      <p>
+        {new Date().toLocaleTimeString()}{" "}
+        {isOpen ? "We're currently open!" : "We're currently close!"}
+      </p>
+    </footer>
   );
 }
